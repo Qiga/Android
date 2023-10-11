@@ -8,7 +8,6 @@ import com.github.cafe.databinding.ActivityMainBinding
 import com.github.cafe.extension.addFragment
 import com.github.cafe.ui.CafeFragment
 import com.github.cafe.ui.GalleryFragment
-import com.github.cafe.ui.OrderFragment
 
 class MainActivity : AppCompatActivity() {
 

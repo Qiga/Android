@@ -1,20 +1,14 @@
 package com.github.cafe.ui
 
 import android.content.Context
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.github.cafe.data.MenuData
 import com.github.cafe.databinding.FragmentDetailBinding
-import java.net.URI
 
 class DetailFragment : Fragment() {
 

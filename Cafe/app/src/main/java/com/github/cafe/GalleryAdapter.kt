@@ -1,12 +1,9 @@
 package com.github.cafe;
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -55,7 +52,6 @@ class GalleryAdapter(val fragmentManager : FragmentManager) : RecyclerView.Adapt
     override fun onBindViewHolder(holder: GalleryHolder, position: Int) {
         holder.bind(position)
     }
-
 
     fun setList(photoList: List<PhotoData>) {
         this.photoList = photoList

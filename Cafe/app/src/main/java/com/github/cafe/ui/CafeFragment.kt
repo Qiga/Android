@@ -12,7 +12,6 @@ import com.github.cafe.data.CoffeeOption
 import com.github.cafe.data.MenuData
 import com.github.cafe.data.Temperature
 import com.github.cafe.databinding.FragmentCafeBinding
-import com.github.cafe.extension.addFragment
 import com.github.cafe.extension.showToast
 
 class CafeFragment : Fragment() {

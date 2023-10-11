@@ -1,24 +1,22 @@
 package com.github.cafe.ui
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.cafe.GalleryAdapter
-import com.github.cafe.R
 import com.github.cafe.data.PhotoData
 import com.github.cafe.databinding.FragmentGalleryBinding
 import com.yeoboyastudy.cafesampleapp.rest.UnsplashClient
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.concurrent.thread
 
 class GalleryFragment : Fragment() {
 
@@ -65,16 +63,15 @@ class GalleryFragment : Fragment() {
 
     private fun setApi(param: String? = null) {
         // Coroutine 사용하여 비동기적으로 API 호출
-        MainScope().launch() {
-            try {
-                UnsplashClient.unsplashApiService.getRandomPhotos(param).let {
+        thread {
+            CoroutineScope(Dispatchers.IO).launch {
+                val result = UnsplashClient.unsplashApiService.getRandomPhotos(param)
+                activity?.runOnUiThread {
                     (binding.gridList.adapter as? GalleryAdapter)?.apply {
-                        this.photoList = it
+                        this.photoList = result
                         notifyDataSetChanged()
                     }
                 }
-            } catch (e: Exception) {
-                Log.e("errordd", e.toString())
             }
         }
     }
@@ -83,7 +80,7 @@ class GalleryFragment : Fragment() {
         val searchText = searchEdt.text.toString()
         setApi(searchText)
     }
-    
+
     private fun onClick() = with(binding) {
         searchBtn.setOnClickListener {
             getSearchParam()

@@ -1,6 +1,5 @@
 package com.github.cafe.extension
 
-import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

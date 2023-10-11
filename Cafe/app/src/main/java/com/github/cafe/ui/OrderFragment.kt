@@ -7,19 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import androidx.annotation.RequiresApi
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.cafe.OrderAdapter
-import com.github.cafe.R
-import com.github.cafe.data.Menu
 import com.github.cafe.data.MenuData
-import com.github.cafe.data.Temperature
-import com.github.cafe.databinding.FragmentCafeBinding
 import com.github.cafe.databinding.FragmentOrderBinding
-import com.github.cafe.extension.showToast
 import kotlin.collections.ArrayList
 
 class OrderFragment : Fragment() {

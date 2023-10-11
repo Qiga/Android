@@ -2,10 +2,8 @@ package com.github.cafe
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.github.cafe.data.MenuData
 import com.github.cafe.databinding.ItemOrderLayoutBinding
 
