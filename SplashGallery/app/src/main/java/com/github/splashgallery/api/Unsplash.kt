@@ -17,13 +17,13 @@ object Unsplash {
                     .build()
                 chain.proceed(request)
             }
-            .addNetworkInterceptor { chain ->
-                val request = chain.request()
-                    .newBuilder()
-                    .header("Accept-Version", "v1")
-                    .build()
-                chain.proceed(request)
-            }
+//            .addNetworkInterceptor { chain ->
+//                val request = chain.request()
+//                    .newBuilder()
+//                    .header("Accept-Version", "v1")
+//                    .build()
+//                chain.proceed(request)
+//            }
             .build()
 
         val retrofit = Retrofit.Builder()

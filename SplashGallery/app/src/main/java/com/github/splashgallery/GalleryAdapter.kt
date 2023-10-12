@@ -3,14 +3,22 @@ package com.github.splashgallery
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.github.splashgallery.databinding.ItemGalleryLayoutBinding
 import com.github.splashgallery.model.PhotoData
+import com.github.splashgallery.ui.DetailFragment
+import com.github.splashgallery.ui.GalleryFragment
 
-class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryHolder>() {
+class GalleryAdapter(
+    val fragmentManager : FragmentManager
+) : RecyclerView.Adapter<GalleryAdapter.GalleryHolder>() {
 
     lateinit var photoList: ArrayList<PhotoData>
+    private lateinit var detailFragment: Fragment
 
     inner class GalleryHolder(private val binding: ItemGalleryLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -20,6 +28,17 @@ class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryHolder>() {
             Glide.with(binding.root)
                 .load(photoData.urls.regular)
                 .into(itemImg)
+
+            //사진을 클릭하면 해당 정보를 전달
+            itemImg.setOnClickListener {
+                detailFragment = DetailFragment().apply {
+                    arguments = bundleOf(GalleryFragment.BUNDLE_URI to  photoData.urls.regular)
+                }
+                fragmentManager.beginTransaction()
+                    .replace(R.id.detailContainer, detailFragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
         }
     }
 
@@ -38,5 +57,6 @@ class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryHolder>() {
 
     fun setList(list : ArrayList<PhotoData>){
         photoList = list
+        notifyDataSetChanged()
     }
 }

@@ -1,4 +1,4 @@
-package com.github.cafe.ui
+package com.github.splashgallery.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.github.cafe.databinding.FragmentDetailBinding
+import com.github.splashgallery.databinding.FragmentDetailBinding
 
 class DetailFragment : Fragment() {
 
