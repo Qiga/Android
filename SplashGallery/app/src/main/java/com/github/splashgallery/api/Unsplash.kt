@@ -5,7 +5,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object Unsplash {
-
     private const val BASE_URL = "https://api.unsplash.com/"
 
     val unsplashService: UnsplashService by lazy {

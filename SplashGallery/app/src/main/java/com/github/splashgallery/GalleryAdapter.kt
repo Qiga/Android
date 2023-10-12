@@ -26,7 +26,7 @@ class GalleryAdapter(
         fun bind(position: Int) = with(binding) {
             val photoData = photoList[position]
             Glide.with(binding.root)
-                .load(photoData.urls.regular)
+                .load(photoData.urls.thumb)
                 .into(itemImg)
 
             //사진을 클릭하면 해당 정보를 전달

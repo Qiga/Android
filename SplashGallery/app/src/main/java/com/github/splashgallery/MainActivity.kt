@@ -1,9 +1,11 @@
 package com.github.splashgallery
 
+import android.os.Binder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
 import com.github.splashgallery.databinding.ActivityMainBinding
 import com.github.splashgallery.ui.GalleryFragment
 
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onClick() = with(binding) {
+        val galleryContainer : FragmentContainerView = binding.galleryContainer
         galleryBtn.setOnClickListener {
             addFragment(R.id.galleryContainer, GalleryFragment(), true)
         }
