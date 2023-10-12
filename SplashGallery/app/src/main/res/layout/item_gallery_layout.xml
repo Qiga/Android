@@ -7,7 +7,7 @@
 
     <com.github.splashgallery.util.SquareLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -16,7 +16,7 @@
             android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"/>
 
     </com.github.splashgallery.util.SquareLayout>
 
