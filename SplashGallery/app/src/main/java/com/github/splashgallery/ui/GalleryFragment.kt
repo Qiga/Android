@@ -59,7 +59,7 @@ class GalleryFragment : Fragment() {
             detailFragment = DetailFragment().apply {
                 arguments = bundleOf(BUNDLE_URI to url)
             }
-            parentFragmentManager.beginTransaction()
+            childFragmentManager.beginTransaction()
                 .replace(R.id.detailContainer, detailFragment)
                 .addToBackStack(null)
                 .commit()
@@ -75,7 +75,7 @@ class GalleryFragment : Fragment() {
 
     // Coroutine 사용하여 비동기적으로 API 호출
     private fun setApi(param: String? = null) {
-        // UI 작업은 Main에 전달
+        // UI 작업은 Main에 전달 viewModel MVVM 공부
         CoroutineScope(Dispatchers.Main).launch {
             //검색 에러 처리 ( 찾을수 없는 결과 )
             try {

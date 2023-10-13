@@ -1,0 +1,16 @@
+*.iml
+.gradle
+/local.properties
+/.idea/*
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+app/prd/release/app-prd-release.aab
+*.aab
+.idea/jarRepositories.xml
+ucrop/build/
+Output/
+/app/debug/
+/app/release/

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeMenu"
+        android:title="Home" />
+    <item
+        android:id="@+id/clipMenu"
+        android:title="Clip" />
+    <item
+        android:id="@+id/addMenu"
+        android:title="Add" />
+    <item
+        android:id="@+id/searchMenu"
+        android:title="Search" />
+    <item
+        android:id="@+id/myMenu"
+        android:title="MyPage" />
+</menu>
