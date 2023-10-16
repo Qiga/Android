@@ -24,7 +24,9 @@ class DetailFragment : Fragment() {
         }
     }
 
-    // 뷰 바인딩
+    /**
+     * 뷰 바인딩
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,7 +36,6 @@ class DetailFragment : Fragment() {
         return binding.root
     }
 
-    // 사진 url 가져오기
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //이미지 세팅
@@ -61,10 +62,12 @@ class DetailFragment : Fragment() {
         }
     }
 
+    /**
+     * 시스템에 접근하여 자판 내리기
+     */
     private fun deleteBoard() {
         val inputMethodManager =
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        //시스템에 접근해서 자판 내려주는 것
         inputMethodManager?.hideSoftInputFromWindow(binding.root.windowToken, 0)
     }
 }

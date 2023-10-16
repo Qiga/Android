@@ -1,8 +1,11 @@
 package com.example.androidstudy.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.androidstudy.data.ChatData
 import com.example.androidstudy.databinding.ItemTextLeftLayoutBinding
 import com.example.androidstudy.databinding.ItemTextRightLayoutBinding
@@ -20,6 +23,13 @@ class ChattingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bind(position: Int) {
             val chat = chatList[position]
             binding.sendText.text = chat.msg.toString()
+
+            if(chat.img != null){
+                Glide.with(binding.root)
+                    .load(chat.img)
+                    .into(binding.sendImg)
+                binding.sendImg.isVisible = true
+            }
         }
     }
 
@@ -29,6 +39,13 @@ class ChattingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bind(position: Int) {
             val chat = chatList[position]
             binding.sendText.text = chat.msg.toString()
+
+            if(chat.img != null){
+                Glide.with(binding.root)
+                    .load(chat.img)
+                    .into(binding.sendImg)
+                binding.sendImg.isVisible = true
+            }
         }
     }
 

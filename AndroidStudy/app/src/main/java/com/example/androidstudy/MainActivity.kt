@@ -13,7 +13,7 @@ import com.example.androidstudy.ui.GalleryFragment
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
-    protected val binding get() = _binding!!
+    private val binding get() = _binding!!
     private var cafeFragment: CafeFragment? = null
     private var galleryFragment: GalleryFragment? = null
     private var chattingFragment: ChattingFragment? = null

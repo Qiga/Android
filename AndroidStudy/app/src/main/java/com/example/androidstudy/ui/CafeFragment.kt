@@ -40,11 +40,6 @@ class CafeFragment : Fragment() {
         onClick()
     }
 
-//    private fun setList(list: ArrayList<MenuData>) {
-//        cafeMenuList.clear()
-//        cafeMenuList.addAll(list)
-//    }
-
     private fun onClick() = with(binding) {
         menu1.setOnClickListener {
             showOptionDialog("아메리카노", true)
@@ -82,6 +77,9 @@ class CafeFragment : Fragment() {
         super.onDestroyView()
     }
 
+    /**
+     * 메뉴에 선택에 따른 Dialog 띄우기 ( 커피 메뉴 구분 )
+     */
     private fun showOptionDialog(menuName: String, isAmericano: Boolean) = with(binding) {
 
         fun newInstance(data: String): MenuOptionDialog {

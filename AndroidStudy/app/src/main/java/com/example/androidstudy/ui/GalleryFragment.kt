@@ -33,6 +33,9 @@ class GalleryFragment : Fragment() {
         const val BUNDLE_URI = "uri"
     }
 
+    /**
+     * API 통신 시작 ( 안전 ? )
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -41,15 +44,22 @@ class GalleryFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * 클릭 기능, Adapter Attach
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         onClick()
         setAdapter()
     }
 
+    /**
+     * RecyclerView( GridLayout ) Adapter 설정
+     */
     private fun setAdapter() {
-        //fragment전환을 위한 manager전달
-        //수정 : fragmentManager 전달 대신에 click Method를 전달하기
+        /**
+         * onClick ( funtion ) 구현을 통한 detailFragement로 전환
+         */
         galleryAdapter = GalleryAdapter(onClick = { url ->
             detailFragment = DetailFragment().apply {
                 arguments = bundleOf(BUNDLE_URI to url)
@@ -60,7 +70,9 @@ class GalleryFragment : Fragment() {
                 .commit()
         })
 
-        //adapter 목록 설정
+        /**
+         * GridLayout으로 설정
+         */
         galleryAdapter?.setList(photoList)
         binding.galleryList.apply {
             adapter = galleryAdapter
@@ -68,24 +80,28 @@ class GalleryFragment : Fragment() {
         }
     }
 
-    // Coroutine 사용하여 비동기적으로 API 호출
+    /**
+     * CoroutineScope Dispatcher(Main, IO)를 활용한 비동기 통신
+     */
     private fun setApi(param: String? = null) {
-        // UI 작업은 Main에 전달 viewModel MVVM 공부
         CoroutineScope(Dispatchers.Main).launch {
-            //검색 에러 처리 ( 찾을수 없는 결과 )
             try {
-                //네트워크 통신은 IO에서 처리
+                /**
+                 * 네트워크 통신 ( IO에서 진행 )
+                 */
                 photoList = withContext(Dispatchers.IO) {
                     UnsplashClient.unsplashApiService.getItemWithName(param)
                 }
                 (binding.galleryList.adapter as GalleryAdapter).setList(photoList)
             } catch (e: Exception) {
-                //예외처리 ( 검색 결과 없음 )
                 Log.e("err", e.toString())
             }
         }
     }
 
+    /**
+     * 클릭 이벤트 설정
+     */
     private fun onClick() = with(binding) {
         searchBtn.setOnClickListener {
             getSearchParam()
@@ -100,13 +116,18 @@ class GalleryFragment : Fragment() {
             }
         }
 
-        //swipeRefresh 레이아웃
+        /**
+         * 새로고침 설정 ( swipeRefreshLayout )
+         */
         swiper.setOnRefreshListener {
             setApi()
             swiper.isRefreshing = false // 새로고침을 완료하면 아이콘 제거
         }
     }
 
+    /**
+     * 사용자 입력 값을 가지고 검색 ( API 통신 포함 )
+     */
     private fun getSearchParam() = with(binding) {
         val searchText = searchEdt.text.toString()
         setApi(searchText)
