@@ -24,7 +24,7 @@ class ChattingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val chat = chatList[position]
             binding.sendText.text = chat.msg.toString()
 
-            if(chat.img != null){
+            if (chat.img != null) {
                 Glide.with(binding.root)
                     .load(chat.img)
                     .into(binding.sendImg)
@@ -40,7 +40,7 @@ class ChattingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val chat = chatList[position]
             binding.sendText.text = chat.msg.toString()
 
-            if(chat.img != null){
+            if (chat.img != null) {
                 Glide.with(binding.root)
                     .load(chat.img)
                     .into(binding.sendImg)
@@ -55,10 +55,11 @@ class ChattingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     enum class Type {
         TEXT_RIGHT, TEXT_LEFT
     }
+
     override fun getItemViewType(position: Int): Int {
         return if (chatList[position].type) Type.TEXT_RIGHT.ordinal else Type.TEXT_LEFT.ordinal
     }
-    
+
     /**
      * 앞서 구분한 viewType에 따른 Holder종류 선택 및 반환 (return type : RecyclerView.ViewHolder (상위 )
      */

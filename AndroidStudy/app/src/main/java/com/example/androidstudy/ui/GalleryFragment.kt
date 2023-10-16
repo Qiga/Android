@@ -100,17 +100,15 @@ class GalleryFragment : Fragment() {
     }
 
     /**
-     * 클릭 이벤트 설정
+     * 클릭 이벤트 설정 ( send 버튼 클릭 시 검색 및 자판, edt 비우기 )
      */
     private fun onClick() = with(binding) {
         searchBtn.setOnClickListener {
             getSearchParam()
             val inputMethodManager =
                 requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            //시스템에 접근해서 자판 내려주는 것
             inputMethodManager?.hideSoftInputFromWindow(it.windowToken, 0)
             searchEdt.apply {
-                // 포커스 없애주고, 내용 지워주기
                 clearFocus()
                 text.clear()
             }

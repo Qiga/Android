@@ -22,18 +22,21 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 
-class SelectPhotoDialog (
-    private var onClick : (String) -> Unit
-) : DialogFragment(){
+class SelectPhotoDialog(
+    private var onClick: (String) -> Unit
+) : DialogFragment() {
 
-    private var _binding : DialogSelectPhotoBinding? = null
+    private var _binding: DialogSelectPhotoBinding? = null
     private val binding get() = _binding!!
-    private lateinit var selectAdapter : SelectPhotoAdapter
+    private lateinit var selectAdapter: SelectPhotoAdapter
     private var photoList = arrayListOf<PhotoData>()
 
+    /**
+     * Dialog 설정
+     */
     override fun onStart() {
         super.onStart()
-        dialog?.apply{
+        dialog?.apply {
             isCancelable = true
             setCanceledOnTouchOutside(true)
             window?.apply {
@@ -41,11 +44,6 @@ class SelectPhotoDialog (
                 setGravity(Gravity.BOTTOM)
             }
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        bundleOf("SELECT_PHOTO" to "")
     }
 
     override fun onCreateView(
@@ -57,6 +55,9 @@ class SelectPhotoDialog (
         return binding.root
     }
 
+    /**
+     * Dialog 설정
+     */
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = object : Dialog(requireContext()) {
             override fun onBackPressed() {
@@ -72,20 +73,26 @@ class SelectPhotoDialog (
         setAdapter()
     }
 
+    /**'
+     * Adapter설정, onClick 메서드 구현으로 사진 정보 전달 ( to ChattingFragment )
+     */
     private fun setAdapter() {
         selectAdapter = SelectPhotoAdapter(onClick = { imgUrl ->
             onClick.invoke(imgUrl)
             dismiss()
         })
         selectAdapter.setList(photoList)
-        binding.photoRV.apply{
+        binding.photoRV.apply {
             adapter = selectAdapter
             layoutManager = GridLayoutManager(requireContext(), 3, RecyclerView.VERTICAL, false)
         }
     }
 
+    /**
+     * unSplash API 호출 , 리스트 설정
+     */
     private fun callApi() {
-        CoroutineScope(Dispatchers.Main).launch{
+        CoroutineScope(Dispatchers.Main).launch {
             try {
                 val result = withContext(Dispatchers.IO) {
                     UnsplashClient.unsplashApiService.getItemWithName(null)
@@ -93,7 +100,7 @@ class SelectPhotoDialog (
 
                 Log.d("dhk", "rufrhk")
                 (binding.photoRV.adapter as SelectPhotoAdapter).setList(result)
-            }catch (e : Exception){
+            } catch (e: Exception) {
                 Log.d("error", e.toString())
             }
         }

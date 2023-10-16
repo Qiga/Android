@@ -8,15 +8,15 @@ import com.example.androidstudy.data.PhotoData
 import com.example.androidstudy.databinding.ItemPhotoLayoutBinding
 
 class SelectPhotoAdapter(
-    private var onClick : (String)-> Unit
-): RecyclerView.Adapter<SelectPhotoAdapter.SelectHolder>() {
+    private var onClick: (String) -> Unit
+) : RecyclerView.Adapter<SelectPhotoAdapter.SelectHolder>() {
 
-    private var photoList : List<PhotoData> = listOf()
+    private var photoList: List<PhotoData> = listOf()
 
     inner class SelectHolder(
-        private var binding : ItemPhotoLayoutBinding
-    ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(imgUrl : String) = with(binding) {
+        private var binding: ItemPhotoLayoutBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(imgUrl: String) = with(binding) {
             Glide.with(binding.root)
                 .load(imgUrl)
                 .into(itemImg)
@@ -40,7 +40,7 @@ class SelectPhotoAdapter(
         return photoList.size
     }
 
-    fun setList(photoList : ArrayList<PhotoData>){
+    fun setList(photoList: ArrayList<PhotoData>) {
         this.photoList = photoList as List<PhotoData>
         notifyDataSetChanged()
     }

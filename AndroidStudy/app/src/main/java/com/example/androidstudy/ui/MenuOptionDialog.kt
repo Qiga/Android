@@ -22,8 +22,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class MenuOptionDialog(
     private val isAmericano: Boolean,
-    private var dismissResult : ((MenuData)-> Unit)
-    ): DialogFragment() {
+    private var dismissResult: ((MenuData) -> Unit)
+) : DialogFragment() {
 
     /**
      * 사용자가 선택한 메뉴 정보에 대한 Key값 (String 이름)
@@ -56,7 +56,7 @@ class MenuOptionDialog(
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {bundle ->
+        arguments?.let { bundle ->
             menu = bundle.getString(MENU_KEY) ?: ""
         }
     }
@@ -69,7 +69,7 @@ class MenuOptionDialog(
         dialog?.apply {
             isCancelable = true
             setCanceledOnTouchOutside(true)
-            window?.apply{
+            window?.apply {
                 setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                 setGravity(Gravity.BOTTOM)
             }
@@ -127,20 +127,22 @@ class MenuOptionDialog(
     /**
      * 옵션 선택에 따른 listener설정
      */
-    private val temperatureCheckedChangedListener = RadioGroup.OnCheckedChangeListener { radioGroup, checkedId ->
-        when (checkedId) {
-            binding.hotOption.id -> temperatureOption = Temperature.Hot
-            binding.coldOption.id -> temperatureOption = Temperature.Ice
+    private val temperatureCheckedChangedListener =
+        RadioGroup.OnCheckedChangeListener { radioGroup, checkedId ->
+            when (checkedId) {
+                binding.hotOption.id -> temperatureOption = Temperature.Hot
+                binding.coldOption.id -> temperatureOption = Temperature.Ice
+            }
         }
-    }
 
-    private val optionCheckedChangedListener = RadioGroup.OnCheckedChangeListener { radioGroup, checkedId ->
-        when (checkedId) {
-            binding.vanillaOption.id -> coffeeOption = CoffeeOption.Vanilla
-            binding.almondOption.id -> coffeeOption = CoffeeOption.Almond
-            binding.noneOption.id -> coffeeOption = CoffeeOption.None
+    private val optionCheckedChangedListener =
+        RadioGroup.OnCheckedChangeListener { radioGroup, checkedId ->
+            when (checkedId) {
+                binding.vanillaOption.id -> coffeeOption = CoffeeOption.Vanilla
+                binding.almondOption.id -> coffeeOption = CoffeeOption.Almond
+                binding.noneOption.id -> coffeeOption = CoffeeOption.None
+            }
         }
-    }
 
     /**
      * 클릭 이벤트 ( 주문, 취소에 대한 이벤트 설정 )
@@ -149,7 +151,7 @@ class MenuOptionDialog(
         orderButton.setOnClickListener {
             Log.d("주문하기", menu)
             when (menu) {
-                "아메리카노" ->{
+                "아메리카노" -> {
                     val americano = MenuData.CoffeeData(
                         "americano",
                         4000,
@@ -159,6 +161,7 @@ class MenuOptionDialog(
                     dismissResult?.invoke(americano)
 
                 }
+
                 "카페라떼" -> {
                     val latte = MenuData.CoffeeData(
                         "latte",
@@ -168,6 +171,7 @@ class MenuOptionDialog(
                     )
                     dismissResult?.invoke(latte)
                 }
+
                 "바닐라라떼" -> {
                     val vanillaLatte = MenuData.CoffeeData(
                         "vanillaLatte",
@@ -177,6 +181,7 @@ class MenuOptionDialog(
                     )
                     dismissResult?.invoke(vanillaLatte)
                 }
+
                 "바닐라크림프라푸치노" -> {
                     val vanillaLatte = MenuData.CoffeeData(
                         "VanillaCreamFrappuccino",
