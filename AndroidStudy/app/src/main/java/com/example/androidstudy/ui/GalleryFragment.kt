@@ -40,7 +40,6 @@ class GalleryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
-        setApi()
         return binding.root
     }
 
@@ -50,6 +49,7 @@ class GalleryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         onClick()
+        setApi()
         setAdapter()
     }
 

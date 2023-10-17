@@ -1,62 +1,64 @@
 package com.github.dalle
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.AttributeSet
 import android.util.Log
-import android.view.View
+import android.view.Menu
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.github.dalle.databinding.ActivityMainBinding
-import com.github.dalle.ui.AddFragment
-import com.github.dalle.ui.ClipFragment
-import com.github.dalle.ui.HomeFragment
-import com.github.dalle.ui.MyFragment
-import com.github.dalle.ui.SearchFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var appBarConfiguration : AppBarConfiguration
+
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
-    private val homeFragment by lazy { HomeFragment() }
-    private val clipFragment by lazy { ClipFragment() }
-    private val addFragment by lazy { AddFragment() }
-    private val searchFragment by lazy { SearchFragment() }
-    private val myFragment by lazy { MyFragment() }
+    private val navController : NavController by lazy {
+        host.navController
+    }
+    private var _host : NavHostFragment? = null
+    private val host get() = _host!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
+        _host= supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         setContentView(binding.root)
-        supportFragmentManager.beginTransaction().add(R.id.fragmentContainer, homeFragment).addToBackStack(null).commit()
-        onClick()
-    }
-    private fun onClick() = with(binding) {
-        menuNav.setOnItemSelectedListener{ selectedItem ->
-            val currentFragment = supportFragmentManager.fragments.last()
-            changeFragment(selectedItem.title.toString(), currentFragment)
-            true //항목 선택을 완료함
-        }
+
+        // Set up Action Bar
+//        val navController = host.navController
+        appBarConfiguration = AppBarConfiguration(navController.graph)
+        setupBottomNavMenu(navController)
     }
 
-    private fun changeFragment(selected : String, currentFragment : Fragment){
-        val transaction = supportFragmentManager.beginTransaction()
-        val fragment = when(selected){
-            "Home" -> homeFragment
-            "Clip" -> clipFragment
-            "Search" -> searchFragment
-            "MyPage" -> myFragment
-            else -> addFragment
-        }
 
-        transaction.apply{
-            hide(currentFragment)
-            if(!fragment.isAdded){
-                add(R.id.fragmentContainer, fragment)
-                addToBackStack(null)
+    private fun setupBottomNavMenu(navController: NavController) {
+        val bottomNav = binding.bottomNavView
+        bottomNav?.setupWithNavController(navController)
+    }
+
+    var waitTime = 0L
+    override fun onBackPressed() {
+        if(navController?.currentDestination?.id == R.id.homeFragment && !navController.popBackStack()) {
+            if (System.currentTimeMillis() - waitTime >= 1500) {
+                waitTime = System.currentTimeMillis()
+                Toast.makeText(this, "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+            } else {
+                finish() // 액티비티 종료
             }
-            show(fragment)
-        }.commit()
-
+        }
+        else{
+            Log.d("asda", navController?.popBackStack().toString())
+            navController.popBackStack()
+        }
     }
 }

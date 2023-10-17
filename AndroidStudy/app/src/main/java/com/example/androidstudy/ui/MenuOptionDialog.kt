@@ -40,12 +40,22 @@ class MenuOptionDialog(
     var menu = ""
 
     /**
-     * Dialog 생성 후 반환
+     * Dialog 생성 후 반환 ,  Dialog 설정 ( dialog 취소 설정, Layout, 크기 위치 조정)
+     * onStart()이전에 실행이 먼저 됨
      */
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = object : Dialog(requireContext()) {
             override fun onBackPressed() {
                 dismiss()
+            }
+        }
+        dialog?.apply {
+            isCancelable = true
+            setCanceledOnTouchOutside(true)
+            setContentView(R.layout.dialog_menu_option)
+            window?.apply {
+                setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                setGravity(Gravity.BOTTOM)
             }
         }
         return dialog
@@ -58,21 +68,6 @@ class MenuOptionDialog(
         super.onCreate(savedInstanceState)
         arguments?.let { bundle ->
             menu = bundle.getString(MENU_KEY) ?: ""
-        }
-    }
-
-    /**
-     *시작 시 Dialog 설정 ( dialog 취소 설정, 레이아웃, 크기 위치 조정)
-     */
-    override fun onStart() {
-        super.onStart()
-        dialog?.apply {
-            isCancelable = true
-            setCanceledOnTouchOutside(true)
-            window?.apply {
-                setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                setGravity(Gravity.BOTTOM)
-            }
         }
     }
 
@@ -110,7 +105,6 @@ class MenuOptionDialog(
         }
         setOnClick()
     }
-
 
     /**
      * Dialog, View 제거

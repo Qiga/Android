@@ -30,10 +30,6 @@ class OrderFragment : Fragment() {
         return binding.root
     }
 
-    private fun onClick() = with(binding) {
-
-    }
-
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
@@ -64,6 +60,5 @@ class OrderFragment : Fragment() {
             Log.d("menu", menuData.toString())
         }
         setAdapter()
-        onClick()
     }
 }

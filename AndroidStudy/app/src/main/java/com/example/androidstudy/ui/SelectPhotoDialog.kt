@@ -11,12 +11,14 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.androidstudy.R
 import com.example.androidstudy.adapter.SelectPhotoAdapter
 import com.example.androidstudy.api.UnsplashClient
 import com.example.androidstudy.data.PhotoData
 import com.example.androidstudy.databinding.DialogMenuOptionBinding
 import com.example.androidstudy.databinding.DialogSelectPhotoBinding
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Delay
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -30,21 +32,6 @@ class SelectPhotoDialog(
     private val binding get() = _binding!!
     private lateinit var selectAdapter: SelectPhotoAdapter
     private var photoList = arrayListOf<PhotoData>()
-
-    /**
-     * Dialog 설정
-     */
-    override fun onStart() {
-        super.onStart()
-        dialog?.apply {
-            isCancelable = true
-            setCanceledOnTouchOutside(true)
-            window?.apply {
-                setLayout(ViewGroup.LayoutParams.MATCH_PARENT, 1500)
-                setGravity(Gravity.BOTTOM)
-            }
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,6 +50,14 @@ class SelectPhotoDialog(
             override fun onBackPressed() {
                 dismiss()
             }
+        }.apply{
+            isCancelable = true
+            setCanceledOnTouchOutside(true)
+            setContentView(R.layout.dialog_select_photo)
+            window?.apply {
+                setLayout(ViewGroup.LayoutParams.MATCH_PARENT, 1500)
+                setGravity(Gravity.BOTTOM)
+            }
         }
         return dialog
     }
@@ -71,6 +66,8 @@ class SelectPhotoDialog(
         super.onViewCreated(view, savedInstanceState)
         callApi()
         setAdapter()
+
+        Log.d("아니왜", "4")
     }
 
     /**'
@@ -98,7 +95,7 @@ class SelectPhotoDialog(
                     UnsplashClient.unsplashApiService.getItemWithName(null)
                 }
 
-                Log.d("dhk", "rufrhk")
+                Log.d("아니왜", "5")
                 (binding.photoRV.adapter as SelectPhotoAdapter).setList(result)
             } catch (e: Exception) {
                 Log.d("error", e.toString())
