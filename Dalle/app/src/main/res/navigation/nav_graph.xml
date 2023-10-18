@@ -10,7 +10,6 @@
         android:name="com.github.dalle.ui.HomeFragment"
         android:label="@string/home"
         tools:layout="@layout/fragment_home">
-        <!-- You can define actions here for transitioning to other fragments -->
     </fragment>
 
     <fragment
@@ -18,7 +17,6 @@
         android:name="com.github.dalle.ui.ClipFragment"
         android:label="@string/clip"
         tools:layout="@layout/fragment_clip">
-        <!-- Define actions for this fragment -->
     </fragment>
 
     <fragment
@@ -26,7 +24,6 @@
         android:name="com.github.dalle.ui.AddFragment"
         android:label="@string/add"
         tools:layout="@layout/fragment_add">
-        <!-- You can define actions here for transitioning to other fragments -->
     </fragment>
 
     <fragment
@@ -34,7 +31,6 @@
         android:name="com.github.dalle.ui.SearchFragment"
         android:label="@string/search"
         tools:layout="@layout/fragment_search">
-        <!-- Define actions for this fragment -->
     </fragment>
 
     <fragment
@@ -42,7 +38,6 @@
         android:name="com.github.dalle.ui.MyFragment"
         android:label="@string/my"
         tools:layout="@layout/fragment_my">
-        <!-- Define actions for this fragment -->
     </fragment>
 
 </navigation>

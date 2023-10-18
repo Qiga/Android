@@ -7,4 +7,5 @@
     <string name="my">My</string>
     <string name="clip">Clip</string>
     <string name="add">Add</string>
+    <string name="EXIT_WARNING">한번 더 뒤로가기를 누르면 종료됩니다.</string>
 </resources>
