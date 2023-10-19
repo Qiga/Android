@@ -16,7 +16,7 @@ class AddFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return inflater.inflate(R.layout.fragment_add, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
