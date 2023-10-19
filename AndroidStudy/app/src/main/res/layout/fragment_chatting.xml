@@ -9,7 +9,7 @@
         android:id="@+id/chattingList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/inputEdt"
+        app:layout_constraintBottom_toTopOf="@id/imgInputContainer"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
@@ -34,21 +34,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.example.androidstudy.util.SquareLayout
+    <FrameLayout
         android:id="@+id/imgInputContainer"
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:background="@color/gray_back"
         android:layout_marginBottom="10dp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/sendBtn"
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
+            android:layout_gravity="end"
             android:id="@+id/inputImg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
 
-    </com.example.androidstudy.util.SquareLayout>
+    </FrameLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/selectContainer"

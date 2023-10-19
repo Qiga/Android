@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray_back">#755C5C5C</color>
+    <color name="my_chat">#FFF49A</color>
+    <color name="enemy_chat">#EAFFFF</color>
 </resources>
