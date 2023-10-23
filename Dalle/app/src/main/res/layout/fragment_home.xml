@@ -6,7 +6,7 @@
     <data>
         <variable
             name="pager"
-            type="com.github.dalle.model.HomeViewModel" />
+            type="com.github.dalle.model.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

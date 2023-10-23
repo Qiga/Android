@@ -4,21 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.dalle.api.UnsplashClient
-import com.github.dalle.api.UnsplashService
 import com.github.dalle.data.Urls
 import com.github.dalle.data.UserImg
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel() {
+class MainViewModel : ViewModel() {
 
     /**
      * HomeFragment에 대한 데이터
      */
     // 이미지 리스트 정보
-    private var _imgList: MutableLiveData<MutableList<UserImg>> = MutableLiveData(mutableListOf())
+    private val _imgList: MutableLiveData<MutableList<UserImg>> = MutableLiveData(mutableListOf())
     val imgList: LiveData<MutableList<UserImg>> get() = _imgList!!
     var currentPage = 1
 

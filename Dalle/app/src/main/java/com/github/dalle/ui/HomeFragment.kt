@@ -7,30 +7,20 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.animation.core.StartOffsetType.Companion.Delay
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStore
-import androidx.lifecycle.viewmodel.ViewModelFactoryDsl
 import com.github.dalle.R
 import com.github.dalle.adpater.LiveViewPagerAdapter
 import com.github.dalle.data.UserImg
 import com.github.dalle.databinding.FragmentHomeBinding
-import com.github.dalle.model.HomeViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Delay
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.github.dalle.model.MainViewModel
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var liveViewPagerAdapter: LiveViewPagerAdapter
-    private val model: HomeViewModel by activityViewModels()
+    private val model: MainViewModel by activityViewModels()
     private var photoList: MutableList<UserImg> = mutableListOf()
 
 

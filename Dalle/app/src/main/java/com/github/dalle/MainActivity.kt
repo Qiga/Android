@@ -4,17 +4,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.findFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.github.dalle.databinding.ActivityMainBinding
-import com.github.dalle.model.HomeViewModel
-import com.github.dalle.ui.HomeFragment
-import com.github.dalle.ui.SearchFragment
+import com.github.dalle.model.MainViewModel
+import com.github.dalle.model.MyViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -25,7 +22,8 @@ class MainActivity : AppCompatActivity() {
     private val navController: NavController by lazy {
         host.navController
     }
-    private lateinit var model : HomeViewModel
+    private lateinit var model : MainViewModel
+    private val myModel by viewModels<MyViewModel>()
 
     /**
      * 버튼 조작 및 Jetpack Navigation 설정 ( BottomNavigation 연동 )
@@ -34,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         _host = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
-        model = ViewModelProvider(this)[HomeViewModel::class.java]
+        model = ViewModelProvider(this)[MainViewModel::class.java]
 
         setContentView(binding.root)
 
@@ -69,12 +67,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    /***
-    override fun onStart() {
-    super.onStart()
-    model.addImg( "https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg")
-    }어쩌면 이건 우리의 처음이자 마지막 사랑일테니까
-    이꿈속 너와함께 했던 시간은 진짜니까
-
-     ****/
 }
