@@ -4,4 +4,9 @@
     <string name="header_menu">Menu</string>
     <string name="americano"> Americano </string>
     <string name="latte"> Latte </string>
+    <string name="plus">Plus</string>
+    <string name="send">Send</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="take_photo">Take Photo</string>
 </resources>

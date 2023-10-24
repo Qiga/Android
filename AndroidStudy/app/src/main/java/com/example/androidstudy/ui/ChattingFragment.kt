@@ -1,39 +1,55 @@
 package com.example.androidstudy.ui
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.androidstudy.R
 import com.example.androidstudy.adapter.ChattingAdapter
 import com.example.androidstudy.data.ChatData
-import com.example.androidstudy.databinding.DialogSelectPhotoBinding
 import com.example.androidstudy.databinding.FragmentChattingBinding
+import com.example.androidstudy.model.ChattingViewModel
 
 class ChattingFragment : Fragment() {
 
     private var _binding: FragmentChattingBinding? = null
     private val binding get() = _binding!!
-    private var message: ChatData? = null
+
     private lateinit var chattingAdapter: ChattingAdapter
     private lateinit var selectPhotoDialog: SelectPhotoDialog
-    private var mine = true
+    private var videoSrc : Uri? = null
+    private val addFragment: AddFragment by lazy {
+        AddFragment(setDialog = { setPhotoDialog() },
+            setLocalImg = { uri ->
+                img = uri
+                Glide.with(binding.root)
+                    .load(uri)
+                    .into(binding.inputImg)
+                binding.imgInputContainer.isVisible = true
+            },
+            setVideo = { uri ->
+                videoSrc = uri
+            }
+        )
+    }
     private var img: String? = null
+    private val model: ChattingViewModel by activityViewModels()
+    private var mine = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentChattingBinding.inflate(inflater, container, false)
         return binding.root
@@ -41,8 +57,9 @@ class ChattingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        onClick()
         setAdapter()
+        setObserver()
+        onClick()
     }
 
     override fun onDestroy() {
@@ -54,21 +71,34 @@ class ChattingFragment : Fragment() {
      * 클릭 이벤트 등록
      */
     private fun onClick() = with(binding) {
-        /**
-         * 이미지 데이터 전달 후 초기화
-         */
+        //이미지 데이터 전달 후 초기화
         sendBtn.setOnClickListener {
-            message = ChatData(binding.inputEdt.text.toString(), mine, img)
+            //더블클릭 발생으로 인한 notify오류 방지
+            binding.sendBtn.isClickable = false
+            val chat = if(videoSrc != null) ChatData.VideoChat(mine, videoSrc!!)
+            else if (binding.inputEdt.text.isEmpty() && img.isNullOrEmpty()) null
+            else if (binding.inputEdt.text.isEmpty()) ChatData.ImgChat(mine, img!!)
+            else if (img.isNullOrEmpty()) ChatData.TextChat(mine, binding.inputEdt.text.toString())
+            else ChatData.TextWithImgChat(mine, binding.inputEdt.text.toString(), img!!)
+            //빈 채팅으로 인해 생기는 오류 방지
+            chat?.let { model.sendChatting(chat) } ?: run { binding.sendBtn.isClickable = true }
             mine = !mine
-            chattingAdapter.addToList(message)
             chattingList.scrollToPosition(0)
             clearData()
         }
         selectPhotoBtn.setOnClickListener {
-            setPhotoBinding()
+            if (addFragment.isAdded) {
+                childFragmentManager.beginTransaction().show(addFragment).commit()
+            } else {
+                childFragmentManager.beginTransaction().add(R.id.addFragmentContainer, addFragment)
+                    .addToBackStack(null).commit()
+            }
         }
     }
 
+    /**
+     * Adapter설정
+     */
     private fun setAdapter() {
         chattingAdapter = ChattingAdapter()
         binding.chattingList.apply {
@@ -76,18 +106,25 @@ class ChattingFragment : Fragment() {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
         }
-        chattingAdapter.addToList(message)
+    }
+
+    /**
+     * ViewModel 값 Observer 설정
+     */
+    private fun setObserver() {
+        model.chatList.observe(viewLifecycleOwner) {
+            chattingAdapter.addToList(it)
+            binding.sendBtn.isClickable = true
+        }
     }
 
     /**
      * 사진 첨부 Dialog띄우기 ( onClick => 선택한 사진(url)을 채팅에 추가 )
      */
-    private fun setPhotoBinding() {
+    private fun setPhotoDialog() {
         selectPhotoDialog = SelectPhotoDialog(onClick = { imgUrl ->
-            Glide.with(binding.root)
-                .load(imgUrl)
-                .into(binding.inputImg)
             img = imgUrl
+            Glide.with(binding.root).load(imgUrl).into(binding.inputImg)
             binding.imgInputContainer.isVisible = true
         })
         binding.selectContainer.isVisible = true
@@ -106,6 +143,7 @@ class ChattingFragment : Fragment() {
             text.clear()
         }
         img = null
+        videoSrc = null
         binding.imgInputContainer.isVisible = false
     }
 }

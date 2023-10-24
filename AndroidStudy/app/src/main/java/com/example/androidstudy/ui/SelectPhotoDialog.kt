@@ -42,21 +42,18 @@ class SelectPhotoDialog(
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NO_FRAME, R.style.isNotFloatingDialog)
+    }
+
     /**
      * Dialog 설정
      */
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = object : Dialog(requireContext()) {
+        val dialog = object : Dialog(requireContext(), theme) {
             override fun onBackPressed() {
                 dismiss()
-            }
-        }.apply{
-            isCancelable = true
-            setCanceledOnTouchOutside(true)
-            setContentView(R.layout.dialog_select_photo)
-            window?.apply {
-                setLayout(ViewGroup.LayoutParams.MATCH_PARENT, 1500)
-                setGravity(Gravity.BOTTOM)
             }
         }
         return dialog
@@ -66,8 +63,6 @@ class SelectPhotoDialog(
         super.onViewCreated(view, savedInstanceState)
         callApi()
         setAdapter()
-
-        Log.d("아니왜", "4")
     }
 
     /**'
@@ -86,7 +81,7 @@ class SelectPhotoDialog(
     }
 
     /**
-     * unSplash API 호출 , 리스트 설정
+     * unSplash API 호출(Network요청 IO로 처리), 리스트 설정
      */
     private fun callApi() {
         CoroutineScope(Dispatchers.Main).launch {
@@ -94,8 +89,6 @@ class SelectPhotoDialog(
                 val result = withContext(Dispatchers.IO) {
                     UnsplashClient.unsplashApiService.getItemWithName(null)
                 }
-
-                Log.d("아니왜", "5")
                 (binding.photoRV.adapter as SelectPhotoAdapter).setList(result)
             } catch (e: Exception) {
                 Log.d("error", e.toString())
