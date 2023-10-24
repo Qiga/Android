@@ -1,6 +1,7 @@
 package com.example.androidstudy.ui
 
 import android.app.Dialog
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -25,7 +26,7 @@ import kotlinx.coroutines.withContext
 import java.lang.Exception
 
 class SelectPhotoDialog(
-    private var onClick: (String) -> Unit
+    private var onClick: (Uri) -> Unit
 ) : DialogFragment() {
 
     private var _binding: DialogSelectPhotoBinding? = null
@@ -70,7 +71,7 @@ class SelectPhotoDialog(
      */
     private fun setAdapter() {
         selectAdapter = SelectPhotoAdapter(onClick = { imgUrl ->
-            onClick.invoke(imgUrl)
+            onClick.invoke(imgUrl as Uri)
             dismiss()
         })
         selectAdapter.setList(photoList)

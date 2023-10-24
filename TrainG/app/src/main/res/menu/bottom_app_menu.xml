@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<!--타이틀, 라벨, 아이콘-->
+    <item android:title="노선 보기" />
+    <item android:title="어플 정보" />
+</menu>

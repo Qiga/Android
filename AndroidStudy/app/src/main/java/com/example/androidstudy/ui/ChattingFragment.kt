@@ -26,6 +26,11 @@ class ChattingFragment : Fragment() {
     private lateinit var chattingAdapter: ChattingAdapter
     private lateinit var selectPhotoDialog: SelectPhotoDialog
     private var videoSrc : Uri? = null
+    private var img: Uri? = null
+    private val model: ChattingViewModel by activityViewModels()
+    private var mine = true
+
+
     private val addFragment: AddFragment by lazy {
         AddFragment(setDialog = { setPhotoDialog() },
             setLocalImg = { uri ->
@@ -37,12 +42,16 @@ class ChattingFragment : Fragment() {
             },
             setVideo = { uri ->
                 videoSrc = uri
+            },
+            setCaptureImg = {uri ->
+                img = uri as Uri
+                Glide.with(binding.root)
+                    .load(uri)
+                    .into(binding.inputImg)
+                binding.imgInputContainer.isVisible = true
             }
         )
     }
-    private var img: String? = null
-    private val model: ChattingViewModel by activityViewModels()
-    private var mine = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,9 +85,9 @@ class ChattingFragment : Fragment() {
             //더블클릭 발생으로 인한 notify오류 방지
             binding.sendBtn.isClickable = false
             val chat = if(videoSrc != null) ChatData.VideoChat(mine, videoSrc!!)
-            else if (binding.inputEdt.text.isEmpty() && img.isNullOrEmpty()) null
+            else if (binding.inputEdt.text.isEmpty() && img.toString().isNullOrEmpty()) null
             else if (binding.inputEdt.text.isEmpty()) ChatData.ImgChat(mine, img!!)
-            else if (img.isNullOrEmpty()) ChatData.TextChat(mine, binding.inputEdt.text.toString())
+            else if (img.toString().isNullOrEmpty()) ChatData.TextChat(mine, binding.inputEdt.text.toString())
             else ChatData.TextWithImgChat(mine, binding.inputEdt.text.toString(), img!!)
             //빈 채팅으로 인해 생기는 오류 방지
             chat?.let { model.sendChatting(chat) } ?: run { binding.sendBtn.isClickable = true }

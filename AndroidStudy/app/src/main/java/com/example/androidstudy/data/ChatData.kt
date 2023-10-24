@@ -15,13 +15,13 @@ sealed class ChatData {
 
     data class ImgChat(
         override val isMe: Boolean,
-        val img: String
+        val img: Uri
     ) : ChatData(), Base
 
     data class TextWithImgChat(
         override val isMe: Boolean,
         val msg : String,
-        val img : String
+        val img : Uri
     ) : ChatData(), Base
 
     data class VideoChat(

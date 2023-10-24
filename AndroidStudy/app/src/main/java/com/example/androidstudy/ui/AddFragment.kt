@@ -1,43 +1,76 @@
 package com.example.androidstudy.ui
 
+import android.R.attr.bitmap
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultRegistryOwner
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.camera.core.processing.SurfaceProcessorNode.In
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import com.example.androidstudy.CameraActivity
-import com.example.androidstudy.LocalActivity
 import com.example.androidstudy.databinding.FragmentAddBinding
-import java.net.URI
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.lang.Exception
+
 
 class AddFragment(
     private val setDialog: () -> Unit,
-    private val setLocalImg: (String) -> Unit,
-    private val setVideo: (Uri) -> Unit
+    private val setLocalImg: (Uri) -> Unit,
+    private val setVideo: (Uri) -> Unit,
+    private val setCaptureImg : (Uri) -> Unit
 ) : Fragment() {
 
     private var _binding: FragmentAddBinding? = null
-    val binding get() = _binding!!
+    private val binding get() = _binding!!
+
+    private val getCameraContent =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            if(it.resultCode == Activity.RESULT_OK){
+//
+//                val bitmap =  it.data!!.extras!!.get("data") as Bitmap
+//                var imageUri : Uri? = null;
+
+//                try {
+//                    // Create a temporary file to store the image
+////                    val file : File = File.createTempFile("jpeg",".jpg","image.jpg")
+//
+//                    // Write the Bitmap data to the file
+//                    val fos : FileOutputStream = FileOutputStream(file);
+//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+//                    fos.close();
+//
+//                    // Get a Uri for the file using FileProvider (requires proper setup in the manifest)
+//                    imageUri = FileProvider.getUriForFile(requireContext(), "your.package.name.fileprovider", file);
+//                } catch (e : Exception){
+//
+//                }
+
+                parentFragmentManager.beginTransaction().hide(this).commit()
+            }
+        }
 
     private val getImgContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             if (uri != null) {
-                setLocalImg.invoke(uri.toString())
+                setLocalImg.invoke(uri)
                 parentFragmentManager.beginTransaction().hide(this).commit()
             }
         }
+
     private val getVideoContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             if (uri != null) {
@@ -75,8 +108,9 @@ class AddFragment(
             parentFragmentManager.popBackStack()
         }
         setCameraButton.setOnClickListener {
-//            val intent = Intent(requireContext(), CameraActivity::class.java)
-//            startForResult.launch(intent)
+            requestPermissions(arrayOf(android.Manifest.permission.CAMERA), IMG_PERMISSION_REQUEST)
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            getCameraContent.launch(intent)
         }
         setGalleryButton.setOnClickListener {
             checkGalleryPermission()
