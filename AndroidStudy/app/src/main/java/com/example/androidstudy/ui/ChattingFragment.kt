@@ -1,7 +1,7 @@
 package com.example.androidstudy.ui
 
 import android.content.Context
-import android.net.Uri
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,8 +25,9 @@ class ChattingFragment : Fragment() {
 
     private lateinit var chattingAdapter: ChattingAdapter
     private lateinit var selectPhotoDialog: SelectPhotoDialog
-    private var videoSrc : Uri? = null
-    private var img: Uri? = null
+    private var videoSrc : String? = null
+    private var img: String? = null
+    private var bitImg : Bitmap? = null
     private val model: ChattingViewModel by activityViewModels()
     private var mine = true
 
@@ -43,10 +44,10 @@ class ChattingFragment : Fragment() {
             setVideo = { uri ->
                 videoSrc = uri
             },
-            setCaptureImg = {uri ->
-                img = uri as Uri
+            setCaptureImg = { bitmap ->
+                bitImg = bitmap
                 Glide.with(binding.root)
-                    .load(uri)
+                    .load(bitmap)
                     .into(binding.inputImg)
                 binding.imgInputContainer.isVisible = true
             }
@@ -84,11 +85,12 @@ class ChattingFragment : Fragment() {
         sendBtn.setOnClickListener {
             //더블클릭 발생으로 인한 notify오류 방지
             binding.sendBtn.isClickable = false
-            val chat = if(videoSrc != null) ChatData.VideoChat(mine, videoSrc!!)
-            else if (binding.inputEdt.text.isEmpty() && img.toString().isNullOrEmpty()) null
+            val chat = if (binding.inputEdt.text.isEmpty() && img.toString().isNullOrEmpty()) null
+            else if (!videoSrc.isNullOrEmpty()) ChatData.VideoChat(mine, videoSrc!!)
             else if (binding.inputEdt.text.isEmpty()) ChatData.ImgChat(mine, img!!)
-            else if (img.toString().isNullOrEmpty()) ChatData.TextChat(mine, binding.inputEdt.text.toString())
-            else ChatData.TextWithImgChat(mine, binding.inputEdt.text.toString(), img!!)
+            else if (img.isNullOrEmpty() && bitImg == null) ChatData.TextChat(mine, binding.inputEdt.text.toString())
+            else if (bitImg == null) ChatData.TextWithImgChat(mine, binding.inputEdt.text.toString(), img!!)
+            else ChatData.BitImgChat(mine, bitImg!!)
             //빈 채팅으로 인해 생기는 오류 방지
             chat?.let { model.sendChatting(chat) } ?: run { binding.sendBtn.isClickable = true }
             mine = !mine
@@ -153,6 +155,7 @@ class ChattingFragment : Fragment() {
         }
         img = null
         videoSrc = null
+        bitImg = null
         binding.imgInputContainer.isVisible = false
     }
 }

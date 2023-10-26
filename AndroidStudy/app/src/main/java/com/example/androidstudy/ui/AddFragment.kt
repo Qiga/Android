@@ -29,9 +29,9 @@ import java.lang.Exception
 
 class AddFragment(
     private val setDialog: () -> Unit,
-    private val setLocalImg: (Uri) -> Unit,
-    private val setVideo: (Uri) -> Unit,
-    private val setCaptureImg : (Uri) -> Unit
+    private val setLocalImg: (String) -> Unit,
+    private val setVideo: (String) -> Unit,
+    private val setCaptureImg : (Bitmap) -> Unit
 ) : Fragment() {
 
     private var _binding: FragmentAddBinding? = null
@@ -40,25 +40,10 @@ class AddFragment(
     private val getCameraContent =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             if(it.resultCode == Activity.RESULT_OK){
-//
-//                val bitmap =  it.data!!.extras!!.get("data") as Bitmap
-//                var imageUri : Uri? = null;
-
-//                try {
-//                    // Create a temporary file to store the image
-////                    val file : File = File.createTempFile("jpeg",".jpg","image.jpg")
-//
-//                    // Write the Bitmap data to the file
-//                    val fos : FileOutputStream = FileOutputStream(file);
-//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-//                    fos.close();
-//
-//                    // Get a Uri for the file using FileProvider (requires proper setup in the manifest)
-//                    imageUri = FileProvider.getUriForFile(requireContext(), "your.package.name.fileprovider", file);
-//                } catch (e : Exception){
-//
-//                }
-
+                val extras = it.data!!.extras
+                //key확인한 결과 data로 결과 전달을 하는 것을 알 수 있음
+                val data : Bitmap = extras!!.get("data") as Bitmap
+                setCaptureImg.invoke(data)
                 parentFragmentManager.beginTransaction().hide(this).commit()
             }
         }
@@ -66,7 +51,7 @@ class AddFragment(
     private val getImgContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             if (uri != null) {
-                setLocalImg.invoke(uri)
+                setLocalImg.invoke(uri.toString())
                 parentFragmentManager.beginTransaction().hide(this).commit()
             }
         }
@@ -74,7 +59,7 @@ class AddFragment(
     private val getVideoContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             if (uri != null) {
-                setVideo.invoke(uri)
+                setVideo.invoke(uri.toString())
                 parentFragmentManager.beginTransaction().hide(this).commit()
             }
         }

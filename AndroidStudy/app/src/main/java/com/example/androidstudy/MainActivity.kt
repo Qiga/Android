@@ -12,6 +12,7 @@ import com.example.androidstudy.model.ChattingViewModel
 import com.example.androidstudy.ui.CafeFragment
 import com.example.androidstudy.ui.ChattingFragment
 import com.example.androidstudy.ui.GalleryFragment
+import com.example.androidstudy.ui.TodoFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private var galleryFragment: GalleryFragment? = null
     private var chattingFragment: ChattingFragment? = null
     private lateinit var model : ChattingViewModel
+    private var todoFragment : TodoFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +41,9 @@ class MainActivity : AppCompatActivity() {
         }
         binding.chattingButton.setOnClickListener {
             chattingFragment()
+        }
+        binding.todoButton.setOnClickListener {
+            setTodoFragment()
         }
     }
 
@@ -61,5 +66,11 @@ class MainActivity : AppCompatActivity() {
         chattingFragment = ChattingFragment()
         binding.fragmentContainer.isVisible = true
         addFragment(R.id.fragmentContainer, chattingFragment, true)
+    }
+
+    private fun setTodoFragment() {
+        todoFragment = TodoFragment()
+        binding.fragmentContainer.isVisible = true
+        addFragment(R.id.fragmentContainer, todoFragment, true)
     }
 }

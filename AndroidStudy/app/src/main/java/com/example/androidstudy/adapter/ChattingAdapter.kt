@@ -1,6 +1,8 @@
 package com.example.androidstudy.adapter
 
 import android.media.MediaPlayer.OnPreparedListener
+import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -21,7 +23,7 @@ import com.example.androidstudy.databinding.ItemVideoRightLayoutBinding
 class ChattingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var chatList: MutableList<ChatData> = mutableListOf()
-
+    var firstUpdate : Boolean = false
     /**
      * 텍스트 채팅(우측)
      */
@@ -66,7 +68,7 @@ class ChattingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
             val chat = chatList[position] as ChatData.VideoChat
-            binding.videoChatView.setVideoURI(chat.video)
+            binding.videoChatView.setVideoURI(Uri.parse(chat.video))
 
             //준비 되면 실행할 것
             binding.videoChatView.setOnPreparedListener {
@@ -116,11 +118,14 @@ class ChattingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
+    /**
+     * 비디오 채팅
+     */
     inner class VideoLeftChattingHolder(private val binding: ItemVideoLeftLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
             val chat = chatList[position] as ChatData.VideoChat
-            binding.videoChatView.setVideoURI(chat.video)
+            binding.videoChatView.setVideoPath(chat.video)
 
             //준비 되면 실행할 것
             binding.videoChatView.setOnPreparedListener {
@@ -135,7 +140,7 @@ class ChattingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
      * ViewType을 구분하여 ViewHodler에 전달하기 (왼쪽 1, 오른쪽 0 )
      */
     enum class Type {
-        TEXT_RIGHT, TEXT_LEFT, TEXT_IMG_RIGHT, TEXT_IMG_LEFT, IMG_RIGHT, IMG_LEFT, VIDEO_RIGHT, VIDEO_LEFT
+        TEXT_RIGHT, TEXT_LEFT, TEXT_IMG_RIGHT, TEXT_IMG_LEFT, IMG_RIGHT, IMG_LEFT, VIDEO_RIGHT, VIDEO_LEFT, BIT_IMG_LEFT, BIT_IMG_RIGHT
     }
 
 
@@ -146,6 +151,7 @@ class ChattingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 is ChatData.TextChat -> Type.TEXT_RIGHT.ordinal
                 is ChatData.TextWithImgChat -> Type.TEXT_IMG_RIGHT.ordinal
                 is ChatData.VideoChat -> Type.VIDEO_RIGHT.ordinal
+                is ChatData.BitImgChat -> Type.BIT_IMG_RIGHT.ordinal
             }
         } else {
             when (chatList[position]) {
@@ -153,6 +159,7 @@ class ChattingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 is ChatData.TextChat -> Type.TEXT_LEFT.ordinal
                 is ChatData.TextWithImgChat -> Type.TEXT_IMG_LEFT.ordinal
                 is ChatData.VideoChat -> Type.VIDEO_LEFT.ordinal
+                is ChatData.BitImgChat -> Type.BIT_IMG_LEFT.ordinal
             }
         }
     }
@@ -187,6 +194,12 @@ class ChattingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             Type.VIDEO_LEFT.ordinal -> VideoLeftChattingHolder(
                 ItemVideoLeftLayoutBinding.inflate(layoutInflater, parent, false)
             )
+            Type.BIT_IMG_RIGHT.ordinal -> ImgRightChattingHolder(
+                ItemImgRightLayoutBinding.inflate(layoutInflater, parent, false)
+            )
+            Type.BIT_IMG_LEFT.ordinal -> ImgLeftChattingHolder(
+                ItemImgLeftLayoutBinding.inflate(layoutInflater, parent, false)
+            )
             else -> TextRightChattingHolder(
                 ItemTextRightLayoutBinding.inflate(layoutInflater, parent, false)
             )
@@ -217,7 +230,14 @@ class ChattingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
      * chatList 업데이트, UI업데이트
      */
     fun addToList(list: MutableList<ChatData>) {
+        if(!firstUpdate){
             chatList = list
-        notifyDataSetChanged()
+            notifyDataSetChanged()
+            firstUpdate = true
+        }else{
+            chatList = list
+            Log.d("하나", "22")
+            notifyItemInserted(0)
+        }
     }
 }

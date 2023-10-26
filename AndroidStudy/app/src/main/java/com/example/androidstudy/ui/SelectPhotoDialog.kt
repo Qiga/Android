@@ -26,7 +26,7 @@ import kotlinx.coroutines.withContext
 import java.lang.Exception
 
 class SelectPhotoDialog(
-    private var onClick: (Uri) -> Unit
+    private var onClick: (String) -> Unit
 ) : DialogFragment() {
 
     private var _binding: DialogSelectPhotoBinding? = null
@@ -71,7 +71,7 @@ class SelectPhotoDialog(
      */
     private fun setAdapter() {
         selectAdapter = SelectPhotoAdapter(onClick = { imgUrl ->
-            onClick.invoke(imgUrl as Uri)
+            onClick.invoke(imgUrl)
             dismiss()
         })
         selectAdapter.setList(photoList)
