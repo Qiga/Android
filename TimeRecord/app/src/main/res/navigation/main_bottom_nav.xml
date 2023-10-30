@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_bottom_nav"
+    app:startDestination="@id/calendarFragment">
+
+    <fragment
+        android:id="@id/calendarFragment"
+        android:name="com.example.timerecord.fragment.CalendarFragment"
+        android:label="@string/calendar"
+        tools:layout="@layout/fragment_calendar" />
+
+    <fragment
+        android:id="@id/cameraFragment"
+        android:name="com.example.timerecord.fragment.CameraFragment"
+        android:label="@string/camera"
+        tools:layout="@layout/fragment_camera" />
+
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="com.example.timerecord.fragment.InfoFragment"
+        android:label="@string/info"
+        tools:layout="@layout/fragment_info" />
+
+</navigation>
