@@ -24,6 +24,7 @@ class CameraProvider : ContentProvider() {
     ): Cursor? {
         return null
     }
+
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
         return null
     }

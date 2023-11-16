@@ -17,6 +17,25 @@
         android:layout_height="0dp"
         tool:listitem="@layout/item_daily_work"
         app:layout_constraintTop_toBottomOf="@id/calendarView"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="50dp"/>
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/dailyWorkRV"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="n개의 일정"
+        android:textSize="25dp"
+        android:layout_margin="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/addWorkBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="일정 추가"
+        app:layout_constraintTop_toBottomOf="@id/dailyWorkRV"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
