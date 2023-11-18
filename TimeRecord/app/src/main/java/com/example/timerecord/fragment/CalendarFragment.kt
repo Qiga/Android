@@ -52,6 +52,9 @@ class CalendarFragment : Fragment() {
         }
     }
 
+    /**
+     * 일정 추가 Dialog 띄우기
+     */
     private fun popAddDialog() {
         
     }
