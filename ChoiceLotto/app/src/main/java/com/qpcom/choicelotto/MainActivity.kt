@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     private fun onClick() = with(binding){
         createRandomButton.setOnClickListener{
             clearNumberText()
@@ -63,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             if(pickNumberSet.size >= 6){
-                showShortToast("모든 번호가 설정 돼 있습니다")
+                showShortToast("더이상 추가할 수 없습니다")
                 return@setOnClickListener
             }
             if(pickNumberSet.contains(binding.numberPicker1.value)){
