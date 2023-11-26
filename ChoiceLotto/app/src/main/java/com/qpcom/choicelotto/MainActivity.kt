@@ -18,7 +18,10 @@ class MainActivity : AppCompatActivity() {
     private val binding get() = _binding!!
 
     private var didRun = false
+
+    //저장된 숫자 set
     private val pickNumberSet : MutableSet<Int> = mutableSetOf()
+    private val showNumberSet : MutableSet<Int> = mutableSetOf()
     private val numberTextViewList : List<TextView> by lazy {
         listOf(
             binding.numberTextView1, binding.numberTextView2, binding.numberTextView3,
@@ -47,15 +50,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun onClick() = with(binding){
         createRandomButton.setOnClickListener{
-            clearNumberText()
-            val list = getDefaultRandomNumber()
-            pickNumberSet.addAll(list)
-            for(i in 0 until pickNumberSet.size){
-                numberTextViewList[i].apply{
-                    text = pickNumberSet.elementAt(i).toString()
-                    isVisible = true
-                }
-            }
+            getDefaultRandomNumber()
+            renderingNumberSet()
         }
 
         addButton.setOnClickListener{
@@ -86,16 +82,36 @@ class MainActivity : AppCompatActivity() {
     /**
      * 랜덤 숫자 (기본 , 시드X, 광고X )
      */
-    private fun getDefaultRandomNumber(): List<Int> {
+    private fun getDefaultRandomNumber() {
+        showNumberSet.clear()
         val numberList = mutableListOf<Int>().apply {
             for (i in 1..45) {
-                this.add(i)
+                if(!pickNumberSet.contains(i)){
+                    this.add(i)
+                }
             }
         }
         numberList.shuffle()
-        return numberList.subList(0, 6)
+        showNumberSet.addAll(pickNumberSet)
+        showNumberSet.addAll(numberList.subList(pickNumberSet.size, 6))
+        Log.d("dd", showNumberSet.toString())
     }
 
+    /**
+     * view 전부 rendering
+     */
+    private fun renderingNumberSet() {
+        for(i in 0 until showNumberSet.size){
+            numberTextViewList[i].apply{
+                text = showNumberSet.elementAt(i).toString()
+                isVisible = true
+            }
+        }
+    }
+
+    /**
+     * 숫자 초기화 함수
+     */
     private fun clearNumberText() {
         pickNumberSet.clear()
         for(textView in numberTextViewList) {
