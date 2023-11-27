@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="zeroLine">#FBC400</color>
+    <color name="tenLine">#69C8F2</color>
+    <color name="twentyLine">#FF7272</color>
+    <color name="thirtyLine">#AAAAAA</color>
+    <color name="fortyLine">#B0D840</color>
 </resources>

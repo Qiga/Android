@@ -7,13 +7,12 @@
     tools:context=".MainActivity">
 
     <View
-        android:layout_height="50dp"
         android:layout_width="0dp"
+        android:layout_height="50dp"
         android:background="#FFE248"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-    </View>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <NumberPicker
         android:id="@+id/numberPicker1"
@@ -62,10 +61,13 @@
 
         <TextView
             android:id="@+id/numberTextView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:gravity="center"
             android:layout_marginHorizontal="10dp"
             android:layout_weight="1"
+            android:background="@drawable/oval"
+            android:backgroundTint="@color/black"
             android:text="1"
             android:textAlignment="center"
             android:textSize="23sp"
@@ -75,9 +77,11 @@
 
         <TextView
             android:id="@+id/numberTextView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:gravity="center"
             android:layout_marginHorizontal="10dp"
+            android:background="@drawable/oval"
             android:text="1"
             android:textAlignment="center"
             android:textSize="23sp"
@@ -87,9 +91,11 @@
 
         <TextView
             android:id="@+id/numberTextView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:gravity="center"
             android:layout_marginHorizontal="10dp"
+            android:background="@drawable/oval"
             android:text="1"
             android:textAlignment="center"
             android:textSize="23sp"
@@ -99,9 +105,11 @@
 
         <TextView
             android:id="@+id/numberTextView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:gravity="center"
             android:layout_marginHorizontal="10dp"
+            android:background="@drawable/oval"
             android:text="1"
             android:textAlignment="center"
             android:textSize="23sp"
@@ -111,9 +119,11 @@
 
         <TextView
             android:id="@+id/numberTextView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:gravity="center"
             android:layout_marginHorizontal="10dp"
+            android:background="@drawable/oval"
             android:text="1"
             android:textAlignment="center"
             android:textSize="23sp"
@@ -123,9 +133,11 @@
 
         <TextView
             android:id="@+id/numberTextView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:gravity="center"
             android:layout_marginHorizontal="10dp"
+            android:background="@drawable/oval"
             android:text="1"
             android:textAlignment="center"
             android:textSize="23sp"

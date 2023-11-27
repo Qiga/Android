@@ -19,7 +19,9 @@ class MainActivity : AppCompatActivity() {
 
     private var didRun = false
 
-    //저장된 숫자 set
+    /**
+     * 숫자 중복 방지를 위해 Set 사용
+     */
     private val pickNumberSet : MutableSet<Int> = mutableSetOf()
     private val showNumberSet : MutableSet<Int> = mutableSetOf()
     private val numberTextViewList : List<TextView> by lazy {
@@ -47,7 +49,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun onClick() = with(binding){
         createRandomButton.setOnClickListener{
             getDefaultRandomNumber()
@@ -67,11 +68,9 @@ class MainActivity : AppCompatActivity() {
                 showShortToast("이미 선택한 번호입니다")
                 return@setOnClickListener
             }
-            numberTextViewList[pickNumberSet.size].apply{
-                text = numberPicker1.value.toString()
-                isVisible = true
-            }
             pickNumberSet.add(numberPicker1.value)
+            showNumberSet.add(numberPicker1.value)
+            renderingNumberSet()
         }
 
         resetButton.setOnClickListener {
@@ -94,16 +93,18 @@ class MainActivity : AppCompatActivity() {
         numberList.shuffle()
         showNumberSet.addAll(pickNumberSet)
         showNumberSet.addAll(numberList.subList(pickNumberSet.size, 6))
-        Log.d("dd", showNumberSet.toString())
     }
 
     /**
      * view 전부 rendering
      */
     private fun renderingNumberSet() {
+        val sortedShowSet = showNumberSet.toSortedSet()
         for(i in 0 until showNumberSet.size){
+            val number = sortedShowSet.elementAt(i)
             numberTextViewList[i].apply{
-                text = showNumberSet.elementAt(i).toString()
+                text = number.toString()
+                background.setTint(getMatchColor(number))
                 isVisible = true
             }
         }
@@ -119,5 +120,20 @@ class MainActivity : AppCompatActivity() {
                 isVisible = false
             }
         }
+    }
+
+    /**
+     * 로또 번호에 따른 배경을 설정하기 위함
+     */
+    private fun getMatchColor(number : Int) : Int {
+        val colorInt : Int = when((number-1)/10) {
+            0 -> R.color.zeroLine
+            1 -> R.color.tenLine
+            2 -> R.color.twentyLine
+            3 -> R.color.thirtyLine
+            4 -> R.color.fortyLine
+            else -> {R.color.zeroLine}
+        }
+        return getColor(colorInt)
     }
 }
