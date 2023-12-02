@@ -93,6 +93,7 @@ class MainActivity : AppCompatActivity() {
         numberList.shuffle()
         showNumberSet.addAll(pickNumberSet)
         showNumberSet.addAll(numberList.subList(pickNumberSet.size, 6))
+        didRun = true
     }
 
     /**
@@ -115,11 +116,13 @@ class MainActivity : AppCompatActivity() {
      */
     private fun clearNumberText() {
         pickNumberSet.clear()
+        showNumberSet.clear()
         for(textView in numberTextViewList) {
             textView.apply{
                 isVisible = false
             }
         }
+        didRun = false
     }
 
     /**
