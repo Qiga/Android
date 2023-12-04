@@ -10,12 +10,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.qpcom.choicelotto.databinding.ActivityMainBinding
+import com.qpcom.choicelotto.databinding.DialogOptionBinding
 import com.qpcom.choicelotto.extension.showShortToast
+import com.qpcom.choicelotto.ui.OptionDialog
+import java.util.Random
 
 class MainActivity : AppCompatActivity() {
 
     private var _binding : ActivityMainBinding? = null
     private val binding get() = _binding!!
+    lateinit var optionDialog: OptionDialog
 
     private var didRun = false
 
@@ -76,6 +80,13 @@ class MainActivity : AppCompatActivity() {
         resetButton.setOnClickListener {
             clearNumberText()
         }
+
+        optionButton.setOnClickListener {
+            optionDialog = OptionDialog().apply{
+
+            }
+            optionDialog.show(supportFragmentManager, "")
+        }
     }
 
     /**
@@ -93,6 +104,19 @@ class MainActivity : AppCompatActivity() {
         numberList.shuffle()
         showNumberSet.addAll(pickNumberSet)
         showNumberSet.addAll(numberList.subList(pickNumberSet.size, 6))
+        didRun = true
+    }
+
+    /**
+     * 랜덤 숫자 생성 (옵션, 시드o, 광고x)
+     */
+    private fun getSeedRandomNumber(seed : Long) {
+        showNumberSet.clear()
+        showNumberSet.addAll(pickNumberSet)
+        val rd = Random(seed)
+        while(showNumberSet.size < 6){
+            showNumberSet.add(rd.nextInt())
+        }
         didRun = true
     }
 
