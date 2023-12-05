@@ -3,4 +3,5 @@
     <string name="resetText">초기화</string>
     <string name="addNumberText">번호 추가</string>
     <string name="createRandomText">랜덤 생성하기</string>
+    <string name="seedSetText">시드값 설정</string>
 </resources>

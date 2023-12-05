@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private var _binding : ActivityMainBinding? = null
     private val binding get() = _binding!!
-    lateinit var optionDialog: OptionDialog
+    private lateinit var optionDialog: OptionDialog
 
     private var didRun = false
 
@@ -83,7 +84,6 @@ class MainActivity : AppCompatActivity() {
 
         optionButton.setOnClickListener {
             optionDialog = OptionDialog().apply{
-
             }
             optionDialog.show(supportFragmentManager, "")
         }
