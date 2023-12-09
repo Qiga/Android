@@ -1,22 +1,16 @@
 package com.qpcom.choicelotto
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.AttributeSet
 import android.util.Log
-import android.view.View
-import android.view.WindowManager
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.view.isVisible
 import com.qpcom.choicelotto.databinding.ActivityMainBinding
-import com.qpcom.choicelotto.databinding.DialogOptionBinding
 import com.qpcom.choicelotto.extension.showShortToast
 import com.qpcom.choicelotto.ui.OptionDialog
 import java.util.Random
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
 
     private var _binding : ActivityMainBinding? = null
     private val binding get() = _binding!!
@@ -84,6 +78,11 @@ class MainActivity : AppCompatActivity() {
 
         optionButton.setOnClickListener {
             optionDialog = OptionDialog().apply{
+                setCallBack( object : OptionDialog.CallBack{
+                    override fun getSeed(s: String) {
+                        Log.d("result", s )
+                    }
+                })
             }
             optionDialog.show(supportFragmentManager, "")
         }
