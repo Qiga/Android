@@ -15,6 +15,8 @@ class MainActivity : AppCompatActivity(){
     private var _binding : ActivityMainBinding? = null
     private val binding get() = _binding!!
     private lateinit var optionDialog: OptionDialog
+    private var _seed : Long? = null
+    private val seed get() = _seed!!
 
     private var didRun = false
 
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity(){
 
     private fun onClick() = with(binding){
         createRandomButton.setOnClickListener{
-            getDefaultRandomNumber()
+            _seed?.let { getSeedRandomNumber(seed) }?:run { getDefaultRandomNumber() }
             renderingNumberSet()
         }
 
@@ -80,7 +82,7 @@ class MainActivity : AppCompatActivity(){
             optionDialog = OptionDialog().apply{
                 setCallBack( object : OptionDialog.CallBack{
                     override fun getSeed(s: String) {
-                        Log.d("result", s )
+                        _seed = s.toLong()
                     }
                 })
             }
@@ -92,6 +94,7 @@ class MainActivity : AppCompatActivity(){
      * 랜덤 숫자 (기본 , 시드X, 광고X )
      */
     private fun getDefaultRandomNumber() {
+        Log.d("st", "startDefaultNum")
         showNumberSet.clear()
         val numberList = mutableListOf<Int>().apply {
             for (i in 1..45) {
@@ -110,6 +113,7 @@ class MainActivity : AppCompatActivity(){
      * 랜덤 숫자 생성 (옵션, 시드o, 광고x)
      */
     private fun getSeedRandomNumber(seed : Long) {
+        Log.d("st", "startSeedNum")
         showNumberSet.clear()
         showNumberSet.addAll(pickNumberSet)
         val rd = Random(seed)
