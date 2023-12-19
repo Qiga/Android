@@ -52,7 +52,8 @@ class MainActivity : AppCompatActivity(){
 
     private fun onClick() = with(binding){
         createRandomButton.setOnClickListener{
-            _seed?.let { getSeedRandomNumber(seed) }?:run { getDefaultRandomNumber() }
+            clearNumberText()
+            getDefaultRandomNumber()
             renderingNumberSet()
         }
 
@@ -78,11 +79,12 @@ class MainActivity : AppCompatActivity(){
             clearNumberText()
         }
 
+        //seed 옵션 비 활성화
         optionButton.setOnClickListener {
             optionDialog = OptionDialog().apply{
                 setCallBack( object : OptionDialog.CallBack{
                     override fun getSeed(s: String) {
-                        _seed = s.toLong()
+                        Log.e("오류 알림", "seed옵션 비활성화")
                     }
                 })
             }
@@ -110,7 +112,7 @@ class MainActivity : AppCompatActivity(){
     }
 
     /**
-     * 랜덤 숫자 생성 (옵션, 시드o, 광고x)
+     * 랜덤 숫자 생성 (옵션, 시드o, 광고x) - 랜덤값 생성 불안정으로 비활성화
      */
     private fun getSeedRandomNumber(seed : Long) {
         Log.d("st", "startSeedNum")

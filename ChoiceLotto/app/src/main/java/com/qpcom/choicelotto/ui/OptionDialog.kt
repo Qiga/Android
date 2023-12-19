@@ -57,6 +57,11 @@ class OptionDialog() : DialogFragment() {
         super.onDestroyView()
     }
 
+
+    /**
+     * Dialog -> Activity 로 Seed 값 전송을 위한 코드
+     * --St--
+     */
     private lateinit var callBack : CallBack
 
     fun setCallBack(operation : CallBack) {
@@ -66,5 +71,8 @@ class OptionDialog() : DialogFragment() {
     interface CallBack {
         fun getSeed( s : String )
     }
+    /**
+     * --End--
+     */
 
 }
