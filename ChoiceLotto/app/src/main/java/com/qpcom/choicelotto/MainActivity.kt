@@ -5,6 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.core.view.isVisible
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
 import com.qpcom.choicelotto.databinding.ActivityMainBinding
 import com.qpcom.choicelotto.extension.showShortToast
 import com.qpcom.choicelotto.ui.OptionDialog
@@ -37,6 +41,7 @@ class MainActivity : AppCompatActivity(){
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setNumberPicker()
+        setBannerAds()
         onClick()
     }
 
@@ -167,5 +172,35 @@ class MainActivity : AppCompatActivity(){
             else -> {R.color.zeroLine}
         }
         return getColor(colorInt)
+    }
+
+    private fun setBannerAds() {
+        MobileAds.initialize(this)          // 1) 광고 SDK 초기화
+        val adRequest = AdRequest.Builder().build()   // 2)
+        binding.adView.loadAd(adRequest)            // 3)
+
+        // 4) 애드뷰 리스너 추가
+        binding.adView.adListener = object : AdListener() {
+            override fun onAdLoaded() {
+                Log.d("ads log", "배너 광고가 로드되었습니다.") // 로그 출력
+            }
+
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                Log.d("ads log", "배너 광고가 로드 시패했습니다. ${adError.responseInfo}")
+            }
+
+            override fun onAdOpened() {
+                Log.d("ads log", "배너 광고를 열었습니다.")
+                // 전면 에 광고가 오버레이 되었을 때
+            }
+
+            override fun onAdClicked() {
+                Log.d("ads log", "배너 광고를 클랙했습니다.")
+            }
+
+            override fun onAdClosed() {
+                Log.d("ads log", "배너 광고를 닫았습니다.")
+            }
+        }
     }
 }
